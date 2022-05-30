@@ -17,7 +17,7 @@ jobs:
     env:
      - build_variant: "mt7621"
      - targets:"JCG-Q20"
-      images_dir: /opt/images 
+       images_dir:/opt/images 
      
     steps:
       - uses: actions/checkout@v2
