@@ -35,7 +35,7 @@ jobs:
         TNAME: JCG-Q20
         KERNEL: 4.4
       run: |
-        cd /trunk
+        cd ./trunk
         if [ ! -f configs/templates/$TNAME.config ] ; then
         echo "configs/templates/$TNAME.config not found "
         exit 1
