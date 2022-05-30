@@ -11,22 +11,14 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
-    name: build
+    name: Build
     runs-on: ubuntu-20.04
     if: ${{ !(github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')) }}
     env:
-      build_variant: ${{ matrix.build_variant }}
-      targets: ${{ matrix.targets }}
-      images_dir: /opt/images
-    strategy:
-      matrix:
-        include:
-          - build_variant: "mt7621"
-            targets: "JCG-Q20"
-         #  - build_variant: "mt7621-usb-1"
-         #    targets: "XY-C1 JCG-836PRO JCG-Y2 NEWIFI ZTE-E8820S B70"
-         #  - build_variant: "mt7621-usb-2"
-         #    targets: "MI-R3G JCG-AC860M NETGEAR-BZV MI-R3P R2100 RM2100 MSG1500 BELL-A040WQ"
+     - build_variant: "mt7621"
+     - targets:"JCG-Q20"
+      images_dir: /opt/images 
+     
     steps:
       - uses: actions/checkout@v2
       - name: Prepare environment
@@ -43,7 +35,7 @@ jobs:
         run: |
           cd trunk
           mkdir -p ${images_dir}
-          for m in $targets; do fakeroot ./build_firmware_ci $m; \
+          for m in $targets; do fakeroot ./build_firmware_Build $m; \
           if [ $? = 0 ]; then cp -f images/*.trx ${images_dir}/$m.trx; else exit 1; fi; \
           ./clear_tree_simple >/dev/null 2>&1; done
       - name: Create archive
